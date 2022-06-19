@@ -1,0 +1,42 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 31
+        buildConfigField 'int', 'VERSION_CODE', "${rootProject.ext.version_code}"
+        buildConfigField 'String', 'VERSION_NAME', "\"${rootProject.ext.version_name}\""
+
+        versionCode rootProject.ext.version_code
+        versionName rootProject.ext.version_name
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
+    api 'com.fasterxml.jackson.core:jackson-core:2.13.1'
+    api 'com.fasterxml.jackson.core:jackson-annotations:2.13.1'
+    //noinspection GradleDependency: 1.5.0 requires Android API 24.
+    api 'org.java-websocket:Java-WebSocket:1.4.1'
+
+    implementation 'org.jetbrains:annotations:23.0.0'
+    testImplementation 'junit:junit:4.13.2'
+}
